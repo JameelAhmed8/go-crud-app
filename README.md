@@ -9,10 +9,6 @@
 - Docker: [Installation Guide](https://docs.docker.com/get-docker/)
 - Postgres (Optional): [Installation Guide](https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql/)
 
-## Prerequisites
-- Docker: [Installation Guide](https://docs.docker.com/get-docker/)
-- Postgres (Optional): [Installation Guide](https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql/)
-
 ## Steps to run the Project
 
 1. Clone the project from the repository.
