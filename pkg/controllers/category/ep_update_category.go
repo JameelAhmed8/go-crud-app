@@ -11,12 +11,12 @@ import (
 	"github.com/google/uuid"
 )
 
-type AuthorUpdateReq struct {
-	AuthorID uuid.UUID              `json:"author_id"`
-	Fields   map[string]interface{} `json:"fields"`
+type CategoryUpdateReq struct {
+	Id   uuid.UUID `json:"category_id"`
+	Name string    `json:"name"`
 }
 
-func AuthorUpdateHandler(w http.ResponseWriter, r *http.Request) {
+func CategoryUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse req body.
 	defer r.Body.Close()
 	rawBody, err := io.ReadAll(r.Body)
@@ -26,16 +26,16 @@ func AuthorUpdateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body := &AuthorUpdateReq{}
+	body := &CategoryUpdateReq{}
 	if err := json.Unmarshal(rawBody, body); err != nil {
 		log.Printf("failed to parse JSON object: %v", err)
 		utils.WriteJSONResponse(w, http.StatusInternalServerError, nil)
 		return
 	}
 
-	err = models.UpdateAuthor(body.AuthorID, body.Fields)
+	err = models.UpdateCategory(body.Id, body.Name)
 	if err != nil {
-		log.Println("failed to update Author", err)
+		log.Println("failed to update category", err)
 		utils.WriteJSONResponse(w, http.StatusInternalServerError, nil)
 		return
 	}

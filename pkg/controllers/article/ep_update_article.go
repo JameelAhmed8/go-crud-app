@@ -11,31 +11,34 @@ import (
 	"github.com/google/uuid"
 )
 
-type AuthorUpdateReq struct {
-	AuthorID uuid.UUID              `json:"author_id"`
-	Fields   map[string]interface{} `json:"fields"`
+type ArticleUpdateReq struct {
+	ArticleID  uuid.UUID `json:"article_id"`
+	Title      string    `json:"title"`
+	Content    string    `json:"content"`
+	Author     string    `json:"author"`
+	CategoryID uuid.UUID `json:"category_id"`
 }
 
-func AuthorUpdateHandler(w http.ResponseWriter, r *http.Request) {
-	// Parse req body.
+func ArticleUpdateHandler(w http.ResponseWriter, r *http.Request) {
+	// Parse request body
 	defer r.Body.Close()
 	rawBody, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Printf("failed to parse req body: %v", err)
+		log.Printf("failed to parse request body: %v", err)
 		utils.WriteJSONResponse(w, http.StatusInternalServerError, nil)
 		return
 	}
 
-	body := &AuthorUpdateReq{}
+	body := &ArticleUpdateReq{}
 	if err := json.Unmarshal(rawBody, body); err != nil {
 		log.Printf("failed to parse JSON object: %v", err)
 		utils.WriteJSONResponse(w, http.StatusInternalServerError, nil)
 		return
 	}
 
-	err = models.UpdateAuthor(body.AuthorID, body.Fields)
+	err = models.UpdateArticle(body.ArticleID, body.Title, body.Content, body.Author, body.CategoryID)
 	if err != nil {
-		log.Println("failed to update Author", err)
+		log.Println("failed to update article", err)
 		utils.WriteJSONResponse(w, http.StatusInternalServerError, nil)
 		return
 	}

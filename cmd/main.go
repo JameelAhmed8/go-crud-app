@@ -21,6 +21,7 @@ func main() {
 	addr := ":" + serverPort
 	log.Printf("Server listening on http://localhost%s\n", addr)
 	log.Fatal(http.ListenAndServe(addr, r))
+
 }
 
 func registerRoutes(r *mux.Router) {
